@@ -1,6 +1,6 @@
 
 
-var scores, roundScore, activePlayer, diceDOM, gamePlaying;
+var scores, roundScore, activePlayer, diceDOM, gamePlaying, tempRoll;
 diceDOM = document.querySelector('.dice');
 
 
@@ -24,7 +24,6 @@ function nextPlayer () {
   roundScore = 0;
   swapActive();
   resetCurrent();
-  diceDOM.style.display = 'none';
   activePlayer = activePlayer === 0 ? 1 : 0;
 }
 
