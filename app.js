@@ -1,6 +1,6 @@
 
 
-var scores, roundScore, activePlayer, diceDOM, gamePlaying, tempRoll;
+var scores, roundScore, activePlayer, diceDOM, gamePlaying, previousRoll, roll;
 diceDOM = document.querySelector('.dice');
 
 
@@ -56,12 +56,15 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     var dice = Math.floor(Math.random() * 6) + 1;
     diceDOM.style.display = 'block';
     diceDOM.src = 'dice-' + dice + '.png';
-    if (dice !== 1) {
+    if (dice === 6 && roll === 6) {
+      nextPlayer();
+    } else if (dice !== 1) {
       roundScore = roundScore + dice;
       currentDOM();
     } else {
       nextPlayer();
     }
+    roll = dice;
   }
 });
 
@@ -72,7 +75,15 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     scores[activePlayer] += roundScore;
     document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
-    if (scores[activePlayer] >= 100) {
+    var input = document.querySelector('.winningScore').value;
+    var winScore;
+    if (input) {
+      winScore = input;
+    } else {
+      winScore = 100;
+    }
+
+    if (scores[activePlayer] >= winScore) {
       document.querySelector('#name-' + activePlayer).textContent = 'Winner !';
       diceDOM.style.display = 'none';
       document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
